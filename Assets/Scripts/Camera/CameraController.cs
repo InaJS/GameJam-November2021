@@ -10,10 +10,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _distanceFromTarget;
     [SerializeField] private float _cameraLift;
     [SerializeField] private float _cameraOvershoot;
-    [Range(1.0f, 10.0f)] [SerializeField] private float _cameraLerpSpeed;
-    [Range(0.01f, 0.1f)] [SerializeField] private float _cameraRelaxSpeed;
+    [Range(1.0f, 10.0f)] [SerializeField] private float _cameraOvershootLerpSpeed;
+    [Range(1.0f, 10.0f)] [SerializeField] private float _snapToCenterSpeed;
     private Transform _targetToFollow;
     private Vector3 _overshootVector;
+    private Vector3 _lastPosition;
 
     public void SetTargetToFollow(Transform target)
     {
@@ -38,15 +39,17 @@ public class CameraController : MonoBehaviour
 
         Vector3 snapTarget = _targetToFollow.position + isometricOffset + birdsEyeViewOffset;
         Vector3 finalTarget = snapTarget + _overshootVector;
-        
-        
-        if (_overshootVector.magnitude < 0.5f * _cameraOvershoot)
-        {
-            _overshootVector = Vector3.Lerp(_overshootVector, Vector3.zero, _cameraRelaxSpeed * Time.deltaTime);
-        }
 
-        // transform.position = snapTarget;
-        transform.position = Vector3.Lerp(snapTarget, finalTarget, _cameraLerpSpeed * Time.deltaTime);
+        if (_overshootVector.magnitude >= 0.5f * _cameraOvershoot)
+        {
+            transform.position = Vector3.Lerp(_lastPosition, finalTarget, _cameraOvershootLerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(_lastPosition, snapTarget, _snapToCenterSpeed * Time.deltaTime);
+        }
+        
+        _lastPosition = transform.position;
     }
 
     public void UpdateCameraOvershoot(Vector3 direction)

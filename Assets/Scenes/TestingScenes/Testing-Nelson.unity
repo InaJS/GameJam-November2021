@@ -381,9 +381,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distanceFromTarget: 5
   _cameraLift: 1
-  _cameraOvershoot: 5
-  _cameraLerpSpeed: 10
-  _cameraRelaxSpeed: 0.05
+  _cameraOvershoot: 2
+  _cameraOvershootLerpSpeed: 9.14
+  _snapToCenterSpeed: 2
 --- !u!114 &363543804
 MonoBehaviour:
   m_ObjectHideFlags: 0
