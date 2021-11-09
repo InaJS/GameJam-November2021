@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Health))]
 public class HealthDisplay : MonoBehaviour
 {
     [SerializeField] private Health health;
