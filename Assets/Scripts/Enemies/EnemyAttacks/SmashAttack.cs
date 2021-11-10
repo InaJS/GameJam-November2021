@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SmashAttack : EnemyAttack
 {
+   
     [SerializeField] private GameObject objectToSmashDown;
     [SerializeField] private Collider objectToSmashCollider;
-    [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private float attackSpeed = 10f;
     [SerializeField] private int attackDamage = 10;
 
@@ -17,6 +17,15 @@ public class SmashAttack : EnemyAttack
     public int AttackDamage => attackDamage;
 
     private Vector3 objectToSmashDownStartPos;
+    
+    public override bool CanAttack()
+    {
+        if (Time.time > attackCooldown + timeOfLastAttack)
+        {
+            return true;
+        }
+        return false;
+    }
     
     public override void DoAttack()
     {

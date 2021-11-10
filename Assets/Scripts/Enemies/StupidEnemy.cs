@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class StupidEnemy : Enemy
 {
-    [Header("Components")] [SerializeField]
-    private SphereCollider _sphereCollider; //Code for OnTriggerEnter
-
     [Header("Enemy setup")] [SerializeField]
     private float aggroRange = 4f;
 
@@ -18,8 +15,8 @@ public class StupidEnemy : Enemy
 
     [Header("Enemy attacks")] [SerializeField]
     private float attackRange = 1.5f;
-
-    [SerializeField] private EnemyAttack myAttack;
+    
+    [SerializeField] private List<EnemyAttack> myAttacks;
 
     private PlayerMovementPrototype _playerMovementPrototype;
     private float distToPlayer;
@@ -27,11 +24,6 @@ public class StupidEnemy : Enemy
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggroRange * 2);
-    }
-
-    private void Start()
-    {
-        //_sphereCollider.radius = aggroRange * 2; //Code for OnTriggerEneter
     }
 
     private void FixedUpdate()
@@ -48,14 +40,19 @@ public class StupidEnemy : Enemy
         if (distToPlayer > distToPlayerBeforeStopChasing) return;
 
         //Follow player
-        transform.position = Vector3.MoveTowards(transform.position, _playerMovementPrototype.transform.position,
+        Vector3 playerPos = _playerMovementPrototype.transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, playerPos,
             movementSpeed * Time.fixedDeltaTime);
+        
+        //Look at player
+        transform.LookAt(playerPos);
 
-        //Attack player if in-range
-        if (distToPlayer < attackRange)
+        foreach (EnemyAttack attack in myAttacks)
         {
-            //todo make myAttack into a List<EnemyAttack> so that we can have multiple attacks on the same enemy, then we just check if any ability is off cooldown and then we slam
-            myAttack?.DoAttack(); //Do attack if we have assigned an attack
+            if (attack.CanAttack() && distToPlayer < attack.AttackRange)
+            {
+                attack.DoAttack();
+            }
         }
     }
 
@@ -71,11 +68,4 @@ public class StupidEnemy : Enemy
             }
         }
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (!other.gameObject.TryGetComponent(out PlayerMovementPrototype playerMovementPrototype)) return; //Early return
-        
-        _playerMovementPrototype = playerMovementPrototype; //Get a reference to the player
-    }*/
 }
