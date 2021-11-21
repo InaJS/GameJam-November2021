@@ -1,3 +1,4 @@
+using System;
 using _Code.CustomEvents.TransformEvent;
 using UnityEngine;
 using VectorExtensions;
@@ -19,9 +20,8 @@ namespace PlayerMovement
         private void Awake()
         {
             _body = this.GetComponent<Rigidbody>();
-            _subscribeToCamera.Raise(this.transform);
+            _subscribeToCamera.Raise(this.gameObject.transform);
         }
-
 
         private void Update()
         {
