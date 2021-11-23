@@ -1,7 +1,7 @@
-using _Code.CustomEvents.BaseEvent;
+using CustomEvents.BaseEvent;
 using UnityEngine;
 
-namespace _Code.CustomEvents.TransformEvent
+namespace CustomEvents.Vector3Event
 {
     public class Vector3EventListener : BaseGameEventListener<Vector3, Vector3Event, UnityVector3Event>
     {

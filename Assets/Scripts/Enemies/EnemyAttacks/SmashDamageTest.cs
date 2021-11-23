@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using Combat___Health;
 using UnityEngine;
 
-public class SmashDamageTest : MonoBehaviour
+namespace Enemies.EnemyAttacks
 {
-    [SerializeField] private Collider _collider;
-    [SerializeField] private SmashAttack _smashAttack;
-    private void OnCollisionEnter(Collision other)
+    public class SmashDamageTest : MonoBehaviour
     {
-        _collider.enabled = false;
+        [SerializeField] private Collider _collider;
+        [SerializeField] private SmashAttack _smashAttack;
+        private void OnCollisionEnter(Collision other)
+        {
+            _collider.enabled = false;
 
-        if (!other.gameObject.TryGetComponent(out Health health)) return;
+            if (!other.gameObject.TryGetComponent(out Health health)) return;
         
-        health.DealDamage(_smashAttack.AttackDamage);
+            health.DealDamage(_smashAttack.AttackDamage);
+        }
     }
 }

@@ -2,21 +2,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace _Code.CustomEvents.BaseEvent
+namespace CustomEvents.BaseEvent
 {
     public abstract class BaseGameEventListener<T, E, UER> : MonoBehaviour,
         IGameEventListener<T> where E : BaseGameEvent<T> where UER : UnityEvent<T>
     {
         [SerializeField] private E _gameEvent;
-        public E GameEvent => _gameEvent;
         [SerializeField] private UER UnityEventResponse;
 
         private void OnEnable()
         {
-            if (_gameEvent == null)
-                return;
-
-            GameEvent.RegisterListener(this);
+            _gameEvent?.RegisterListener(this);
             // foreach (var singleEvent in GameEvent)
             // {
             //     singleEvent.RegisterListener(this);
@@ -25,24 +21,12 @@ namespace _Code.CustomEvents.BaseEvent
 
         private void OnDisable()
         {
-            if (_gameEvent == null)
-                return;
-            GameEvent.UnregisterListener(this);
-        
-            // foreach (var singleEvent in GameEvent)
-            // {
-            //     singleEvent.UnregisterListener(this);
-            // }
+            _gameEvent?.UnregisterListener(this);
         }
 
         public void OnEventRaised(T item)
         {
             UnityEventResponse?.Invoke(item);
-        
-            // foreach (var response in UnityEventResponse)
-            // {
-            //     response?.Invoke(item);
-            // }
         }
     }
 
@@ -52,4 +36,5 @@ namespace _Code.CustomEvents.BaseEvent
         public E gameEvent;
         public UER UnityEventResponse;
     }
+
 }

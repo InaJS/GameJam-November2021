@@ -1,5 +1,6 @@
 using System;
-using _Code.CustomEvents.TransformEvent;
+using CustomEvents.TransformEvent;
+using CustomEvents.Vector3Event;
 using UnityEngine;
 using VectorExtensions;
 
@@ -17,7 +18,7 @@ namespace PlayerMovement
         private Vector3 _registeredMovement = new Vector3();
         private Vector3 _isoMovement = new Vector3();
         
-        private void Awake()
+        private void Start()
         {
             _body = this.GetComponent<Rigidbody>();
             _subscribeToCamera.Raise(this.gameObject.transform);

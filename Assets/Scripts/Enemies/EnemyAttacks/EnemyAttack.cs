@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+namespace Enemies.EnemyAttacks
 {
-    [SerializeField] protected float attackRange = 5f;
-    [SerializeField] protected float attackCooldown = 2f;
-    
-    public float AttackRange => attackRange;
-    public float AttackCooldown => attackCooldown;
-    
-    public virtual void DoAttack(){}
-    public virtual bool CanAttack()
+    public class EnemyAttack : MonoBehaviour
     {
-        return false;
+        [SerializeField] protected float attackRange = 5f;
+        [SerializeField] protected float attackCooldown = 2f;
+    
+        public float AttackRange => attackRange;
+        public float AttackCooldown => attackCooldown;
+    
+        public virtual void DoAttack(){}
+        public virtual bool CanAttack()
+        {
+            return false;
+        }
     }
 }

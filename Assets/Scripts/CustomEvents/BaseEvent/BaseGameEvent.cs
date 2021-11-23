@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Code.CustomEvents.BaseEvent
+namespace CustomEvents.BaseEvent
 {
     public class BaseGameEvent<T> : ScriptableObject
     {

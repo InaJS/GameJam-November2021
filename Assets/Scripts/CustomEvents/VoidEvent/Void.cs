@@ -1,4 +1,4 @@
-﻿namespace _Code.CustomEvents.VoidEvent
+﻿namespace CustomEvents.VoidEvent
 {
     [System.Serializable]
     public struct Void { }
